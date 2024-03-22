@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import {
   Tooltip,
@@ -20,7 +20,6 @@ export const ActionTooltip = ({
     side,
     align
 }: ActionTooltipProps) => {
-    console.log('actionTooltip')
     return (
         <TooltipProvider>
             <Tooltip delayDuration={50}>

@@ -31,6 +31,7 @@ export const NavigationSideBar = async () => {
         {servers.map((server) => (
           <div key={server.id} className="mb-4" >
             <NavigationItem id={server.id} name={server.name} imageUrl={server.imageUrl}></NavigationItem>
+            <Separator className="h-[2px] bg-zinc-300 dark:bg-zinc-700 rounded-md w-10 mx-auto pd mt-2" />
           </div>
         ))}
       </ScrollArea>
