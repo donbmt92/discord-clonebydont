@@ -1,14 +1,19 @@
+import { Server } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "createServer";
-// | "EditServer" | "
+export type ModalType = "createServer" | "invite";
+
+interface ModalData {
+  server?: Server
+}
 
 /* The `interface ModalStore` in the TypeScript code snippet defines the structure of the `ModalStore`
 object. Here's what each property in the interface represents: */
 interface ModalStore {
   type: ModalType | null;
+  data: ModalData;
   isOpen: boolean;
-  onOpen: (type: ModalType) => void;
+  onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;
 }
 
@@ -17,7 +22,8 @@ state management solution for handling modals in an application. The `useModal` 
 returns an object with properties `type`, `isOpen`, `onOpen`, and `onClose`. */
 export const  useModal = create<ModalStore>((set) => ({
   type: null,
+  data: {},
   isOpen: false,
-  onOpen: (type) => set({ isOpen: true, type }),
+  onOpen: (type, data = {} ) => set({ isOpen: true, type, data }),
   onClose: () => set({ isOpen: false, type: null }),
 }));
