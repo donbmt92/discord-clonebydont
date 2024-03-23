@@ -6,7 +6,7 @@ import { currentProfile } from "@/lib/current-profile";
 
 interface InviteCodePageProps {
   params: {
-    inviteCode: string;
+    'invite-code': string;
   };
 };
 
@@ -18,14 +18,14 @@ const InviteCodePage = async ({
   if (!profile) {
     return redirectToSignIn();
   }
-
-  if (!params.inviteCode) {
+  
+  if (!params["invite-code"]) {
     return redirect("/");
   }
 
   const existingServer = await db.server.findFirst({
     where: {
-      inviteCode: params.inviteCode,
+      inviteCode: params["invite-code"],
       members: {
         some: {
           profileId: profile.id
@@ -40,7 +40,7 @@ const InviteCodePage = async ({
 
   const server = await db.server.update({
     where: {
-      inviteCode: params.inviteCode,
+      inviteCode: params["invite-code"],
     },
     data: {
       members: {
