@@ -56,11 +56,12 @@ export const EditServerModal = () => {
   });
 
   useEffect(() => {
+    
     if (server) {
       form.setValue("name", server.name);
       form.setValue("imageUrl", server.imageUrl);
     }
-  }, [server, form]);
+  }, [server, form, isModelOpen]);
 
   const isLoading = form.formState.isSubmitting;
 
