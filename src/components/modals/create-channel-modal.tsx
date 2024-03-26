@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import qs from "query-string"
+import qs from "query-string";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChannelType } from "@prisma/client";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z
@@ -49,18 +50,28 @@ const formSchema = z.object({
 });
 
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
+
   const isModelOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   });
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -69,9 +80,9 @@ export const CreateChannelModal = () => {
       const url = qs.stringifyUrl({
         url: "/api/channels",
         query: {
-          serverId: params?.serverId
-        }
-      })
+          serverId: params?.serverId,
+        },
+      });
       await axios.post(url, values);
 
       form.reset();
@@ -129,14 +140,20 @@ export const CreateChannelModal = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0
-                        focus:ring-offset-0 capitalize outline-none">
-                          <SelectValue placeholder="Select a channel type"/>
+                        <SelectTrigger
+                          className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0
+                        focus:ring-offset-0 capitalize outline-none"
+                        >
+                          <SelectValue placeholder="Select a channel type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {Object.values(ChannelType).map((type) => (
-                          <SelectItem key={type} value={type} className="capitalize">
+                          <SelectItem
+                            key={type}
+                            value={type}
+                            className="capitalize"
+                          >
                             {type.toLowerCase()}
                           </SelectItem>
                         ))}
