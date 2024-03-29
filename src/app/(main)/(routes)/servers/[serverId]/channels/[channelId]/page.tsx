@@ -50,13 +50,14 @@ const ChannelidPage = async ({ params }: ChannelIdPageProps) => {
         type="channel"
         apiUrl="/api/messages"
         chatId={channel.id}
-        socketUrl="api/socket/messages"
+        socketUrl="/api/socket/messages"
         paramKey="channelId"
         paramValue={channel.id}
         socketQuery={{
           channelId: channel.id,
           serverId: channel.serverId,
         }}
+       
       />
       <ChatInput
         apiUrl="/api/socket/messages"
