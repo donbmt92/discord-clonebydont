@@ -11,14 +11,15 @@ export type ModalType =
   | "leaveServer"
   | "deleteServer"
   | "editChannel"
-  | "messageFile";
+  | "messageFile"
+  | "deleteMessage";
 
 interface ModalData {
   server?: Server;
   channel?: Channel;
   channelType?: ChannelType;
-  apiUrl? : string;
-  query?:Record<string, any>;
+  apiUrl?: string;
+  query?: Record<string, any>;
 }
 
 /* The `interface ModalStore` in the TypeScript code snippet defines the structure of the `ModalStore`
