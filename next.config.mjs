@@ -9,15 +9,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "utfs.io",
-      },
-    ],
-    // domains: [
-    //     "utfs.io"
-    // ]
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "utfs.io",
+    //   },
+    // ],
+    domains: ["uploadthing.com", "utfs.io"],
   },
 };
 
